@@ -70,50 +70,64 @@ import java_cup.runtime.Symbol;
 %cup
 
 %%
+/* TODO: Need to revisit the regexes and ordering of the rules */
 
-\*                              { return new Symbol(TokenConstants.MULT); }
-pool                            { return new Symbol(TokenConstants.POOL); }
+/* Keywords */
 case                            { return new Symbol(TokenConstants.CASE); }
-(                               { return new Symbol(TokenConstants.LPAREN); }
-;                               { return new Symbol(TokenConstants.MINUS); }
-.+                              { return new Symbol(TokenConstants.STR_CONST); }
-)                               { return new Symbol(TokenConstants.RPAREN); }
-not                             { return new Symbol(TokenConstants.NOT); }
-[A-Z][A-Za-z0-9_]*               { return new Symbol(TokenConstants.TYPEID); }
-<                               { return new Symbol(TokenConstants.LT); }
-in                              { return new Symbol(TokenConstants.IN); }
-,                               { return new Symbol(TokenConstants.COMMA); }
 class                           { return new Symbol(TokenConstants.CLASS); }
-fi                              { return new Symbol(TokenConstants.FI); }
-/                               { return new Symbol(TokenConstants.DIV); }
-loop                            { return new Symbol(TokenConstants.LOOP); }
-\+                              { return new Symbol(TokenConstants.PLUS); }
-=                               { return new Symbol(TokenConstants.ASSIGN); }
-if                              { return new Symbol(TokenConstants.IF); }
-\.                              { return new Symbol(TokenConstants.DOT); }
-<=                              { return new Symbol(TokenConstants.LE); }
-of                              { return new Symbol(TokenConstants.OF); }
-{ return new Symbol(TokenConstants.EOF); }
-\-?[0-9]+                       { return new Symbol(TokenConstants.INT_CONST); }
-new                             { return new Symbol(TokenConstants.NEW); }
-{ return new Symbol(TokenConstants.error); }
-isvoid                          { return new Symbol(TokenConstants.ISVOID); }
-==                              { return new Symbol(TokenConstants.EQ); }
-                                { return new Symbol(TokenConstants.ERROR); }
-:                               { return new Symbol(TokenConstants.COLON); }
-\-                              { return new Symbol(TokenConstants.NEG); }
-{                               { return new Symbol(TokenConstants.LBRACE); }
 else                            { return new Symbol(TokenConstants.ELSE); }
-                                { return new Symbol(TokenConstants.DARROW); }
-while                           { return new Symbol(TokenConstants.WHILE); }
 esac                            { return new Symbol(TokenConstants.ESAC); }
+false                           { return new Symbol(TokenConstants.BOOL_CONST); }
+fi                              { return new Symbol(TokenConstants.FI); }
+if                              { return new Symbol(TokenConstants.IF); }
+in                              { return new Symbol(TokenConstants.IN); }
+inherits                        { return new Symbol(TokenConstants.INHERITS); }
+isvoid                          { return new Symbol(TokenConstants.ISVOID); }
 let                             { return new Symbol(TokenConstants.LET); }
-}                               { return new Symbol(TokenConstants.RBRACE); }
-                                { return new Symbol(TokenConstants.LET_STMT); }
+loop                            { return new Symbol(TokenConstants.LOOP); }
+new                             { return new Symbol(TokenConstants.NEW); }
+not                             { return new Symbol(TokenConstants.NOT); }
+of                              { return new Symbol(TokenConstants.OF); }
+pool                            { return new Symbol(TokenConstants.POOL); }
 then                            { return new Symbol(TokenConstants.THEN); }
-true|false                      { return new Symbol(TokenConstants.BOOL_CONST); }
+true                            { return new Symbol(TokenConstants.BOOL_CONST); }
+while                           { return new Symbol(TokenConstants.WHILE); }
+
+/* Operators */
+\+                              { return new Symbol(TokenConstants.PLUS); }
+\-                              { return new Symbol(TokenConstants.MINUS); }
+\*                              { return new Symbol(TokenConstants.MULT); }
+/                               { return new Symbol(TokenConstants.DIV); }
+<                               { return new Symbol(TokenConstants.LT); }
+<=                              { return new Symbol(TokenConstants.LE); }
+=                               { return new Symbol(TokenConstants.ASSIGN); }
+==                              { return new Symbol(TokenConstants.EQ); }
+
+                                { return new Symbol(TokenConstants.NEG); }
+
+{                               { return new Symbol(TokenConstants.LBRACE); }
+}                               { return new Symbol(TokenConstants.RBRACE); }
+(                               { return new Symbol(TokenConstants.LPAREN); }
+)                               { return new Symbol(TokenConstants.RPAREN); }
+:                               { return new Symbol(TokenConstants.COLON); }
+;                               { return new Symbol(TokenConstants.SEMI); }
+\.                              { return new Symbol(TokenConstants.DOT); }
+,                               { return new Symbol(TokenConstants.COMMA); }
+
+/* Constants, identifiers, etc */
+[A-Z][A-Za-z0-9_]*              { return new Symbol(TokenConstants.TYPEID); }
 [a-z_][A-Za-z0-9_]*             { return new Symbol(TokenConstants.OBJECTID); }
-{ return new Symbol(TokenConstants.AI); }
+.+                              { return new Symbol(TokenConstants.STR_CONST); }
+\-?[0-9]+                       { return new Symbol(TokenConstants.INT_CONST); }
+
+                                { return new Symbol(TokenConstants.EOF); }
+				{ return new Symbol(TokenConstants.DARROW); }
+                                { return new Symbol(TokenConstants.LET_STMT); }
+                                { return new Symbol(TokenConstants.AI); }
+
+                                { return new Symbol(TokenConstants.error); }
+                                { return new Symbol(TokenConstants.ERROR); }
+
 
 
 <YYINITIAL>"=>"			{ /* Sample lexical rule for "=>" arrow.
