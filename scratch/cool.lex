@@ -73,25 +73,25 @@ import java_cup.runtime.Symbol;
 /* TODO: Need to revisit the regexes and ordering of the rules */
 
 /* Keywords */
-case                            { return new Symbol(TokenConstants.CASE); }
-class                           { return new Symbol(TokenConstants.CLASS); }
-else                            { return new Symbol(TokenConstants.ELSE); }
-esac                            { return new Symbol(TokenConstants.ESAC); }
-false                           { return new Symbol(TokenConstants.BOOL_CONST); }
-fi                              { return new Symbol(TokenConstants.FI); }
-if                              { return new Symbol(TokenConstants.IF); }
-in                              { return new Symbol(TokenConstants.IN); }
-inherits                        { return new Symbol(TokenConstants.INHERITS); }
-isvoid                          { return new Symbol(TokenConstants.ISVOID); }
-let                             { return new Symbol(TokenConstants.LET); }
-loop                            { return new Symbol(TokenConstants.LOOP); }
-new                             { return new Symbol(TokenConstants.NEW); }
-not                             { return new Symbol(TokenConstants.NOT); }
-of                              { return new Symbol(TokenConstants.OF); }
-pool                            { return new Symbol(TokenConstants.POOL); }
-then                            { return new Symbol(TokenConstants.THEN); }
-true                            { return new Symbol(TokenConstants.BOOL_CONST); }
-while                           { return new Symbol(TokenConstants.WHILE); }
+case(?=\s)                      { return new Symbol(TokenConstants.CASE); }
+class(?=\s)                     { return new Symbol(TokenConstants.CLASS); }
+else(?=[\s|\{])                 { return new Symbol(TokenConstants.ELSE); }
+esac(?=[\s|\n])                 { return new Symbol(TokenConstants.ESAC); }
+f[Aa][Ll][Ss][Ee](?=[\s|;|\)])  { return new Symbol(TokenConstants.BOOL_CONST); }
+fi(?=[\s|\n])                   { return new Symbol(TokenConstants.FI); }
+if(?=[\s|\(])                   { return new Symbol(TokenConstants.IF); }
+in(?=\s)                        { return new Symbol(TokenConstants.IN); }
+inherits(?=\s)                  { return new Symbol(TokenConstants.INHERITS); }
+isvoid(?=\s)                    { return new Symbol(TokenConstants.ISVOID); }
+let(?=\s)                       { return new Symbol(TokenConstants.LET); }
+loop(?=\s)                      { return new Symbol(TokenConstants.LOOP); }
+new(?=\s)                       { return new Symbol(TokenConstants.NEW); }
+not(?=\s)                       { return new Symbol(TokenConstants.NOT); }
+of(?=\s)                        { return new Symbol(TokenConstants.OF); }
+pool(?=[\s|\n])                 { return new Symbol(TokenConstants.POOL); }
+then(?=[\s|\(])                 { return new Symbol(TokenConstants.THEN); }
+t[Rr][Uu][Ee](?=[\s|;|\)])      { return new Symbol(TokenConstants.BOOL_CONST); }
+while(?=[\s|\(])                { return new Symbol(TokenConstants.WHILE); }
 
 /* Operators */
 \+                              { return new Symbol(TokenConstants.PLUS); }
@@ -100,7 +100,7 @@ while                           { return new Symbol(TokenConstants.WHILE); }
 /                               { return new Symbol(TokenConstants.DIV); }
 <                               { return new Symbol(TokenConstants.LT); }
 <=                              { return new Symbol(TokenConstants.LE); }
-=                               { return new Symbol(TokenConstants.ASSIGN); }
+<-                              { return new Symbol(TokenConstants.ASSIGN); }
 ==                              { return new Symbol(TokenConstants.EQ); }
 
                                 { return new Symbol(TokenConstants.NEG); }
@@ -116,27 +116,16 @@ while                           { return new Symbol(TokenConstants.WHILE); }
 
 /* Constants, identifiers, etc */
 [A-Z][A-Za-z0-9_]*              { return new Symbol(TokenConstants.TYPEID); }
-[a-z_][A-Za-z0-9_]*             { return new Symbol(TokenConstants.OBJECTID); }
-.+                              { return new Symbol(TokenConstants.STR_CONST); }
+[a-z][A-Za-z0-9_]*              { return new Symbol(TokenConstants.OBJECTID); }
+"[^\0\n"]{0,1024}"                { return new Symbol(TokenConstants.STR_CONST); }
 \-?[0-9]+                       { return new Symbol(TokenConstants.INT_CONST); }
 
                                 { return new Symbol(TokenConstants.EOF); }
-				{ return new Symbol(TokenConstants.DARROW); }
                                 { return new Symbol(TokenConstants.LET_STMT); }
                                 { return new Symbol(TokenConstants.AI); }
 
+<YYINITIAL>"=>"                 { return new Symbol(TokenConstants.DARROW); }
                                 { return new Symbol(TokenConstants.error); }
                                 { return new Symbol(TokenConstants.ERROR); }
 
-
-
-<YYINITIAL>"=>"			{ /* Sample lexical rule for "=>" arrow.
-                                     Further lexical rules should be defined
-                                     here, after the last %% separator */
-                                  return new Symbol(TokenConstants.DARROW); }
-
-.                               { /* This rule should be the very last
-                                     in your lexical specification and
-                                     will match match everything not
-                                     matched by other lexical rules. */
-                                  System.err.println("LEXER BUG - UNMATCHED: " + yytext()); }
+.                               { System.err.println("LEXER BUG - UNMATCHED: " + yytext()); }
