@@ -21,17 +21,17 @@ import java_cup.runtime.Symbol;
 
     private int curr_lineno = 1;
     int get_curr_lineno() {
-	return curr_lineno;
+        return curr_lineno;
     }
 
     private AbstractSymbol filename;
 
     void set_filename(String fname) {
-	filename = AbstractTable.stringtable.addString(fname);
+        filename = AbstractTable.stringtable.addString(fname);
     }
 
     AbstractSymbol curr_filename() {
-	return filename;
+        return filename;
     }
 %}
 
@@ -73,25 +73,25 @@ import java_cup.runtime.Symbol;
 /* TODO: Need to revisit the regexes and ordering of the rules */
 
 /* Keywords */
-case(?=\s)                      { return new Symbol(TokenConstants.CASE); }
-class(?=\s)                     { return new Symbol(TokenConstants.CLASS); }
-else(?=[\s|\{])                 { return new Symbol(TokenConstants.ELSE); }
-esac(?=[\s|\n])                 { return new Symbol(TokenConstants.ESAC); }
-f[Aa][Ll][Ss][Ee](?=[\s|;|\)])  { return new Symbol(TokenConstants.BOOL_CONST); }
-fi(?=[\s|\n])                   { return new Symbol(TokenConstants.FI); }
-if(?=[\s|\(])                   { return new Symbol(TokenConstants.IF); }
-in(?=\s)                        { return new Symbol(TokenConstants.IN); }
-inherits(?=\s)                  { return new Symbol(TokenConstants.INHERITS); }
-isvoid(?=\s)                    { return new Symbol(TokenConstants.ISVOID); }
-let(?=\s)                       { return new Symbol(TokenConstants.LET); }
-loop(?=\s)                      { return new Symbol(TokenConstants.LOOP); }
-new(?=\s)                       { return new Symbol(TokenConstants.NEW); }
-not(?=\s)                       { return new Symbol(TokenConstants.NOT); }
-of(?=\s)                        { return new Symbol(TokenConstants.OF); }
-pool(?=[\s|\n])                 { return new Symbol(TokenConstants.POOL); }
-then(?=[\s|\(])                 { return new Symbol(TokenConstants.THEN); }
-t[Rr][Uu][Ee](?=[\s|;|\)])      { return new Symbol(TokenConstants.BOOL_CONST); }
-while(?=[\s|\(])                { return new Symbol(TokenConstants.WHILE); }
+(?i)case(?-i)(?=\s)             { return new Symbol(TokenConstants.CASE); }
+(?i)class(?-i)(?=\s)            { return new Symbol(TokenConstants.CLASS); }
+(?i)else(?-i)(?=[\s|\{])        { return new Symbol(TokenConstants.ELSE); }
+(?i)esac(?-i)(?=[\s|\n])        { return new Symbol(TokenConstants.ESAC); }
+f(?i)alse(?-i)(?=[\s|;|\)])     { return new Symbol(TokenConstants.BOOL_CONST); }
+(?i)fi(?-i)(?=[\s|\n])          { return new Symbol(TokenConstants.FI); }
+(?i)if(?-i)(?=[\s|\(])          { return new Symbol(TokenConstants.IF); }
+(?i)in(?-i)(?=\s)               { return new Symbol(TokenConstants.IN); }
+(?i)inherits(?-i)(?=\s)         { return new Symbol(TokenConstants.INHERITS); }
+(?i)isvoid(?-i)(?=\s)           { return new Symbol(TokenConstants.ISVOID); }
+(?i)let(?-i)(?=\s)              { return new Symbol(TokenConstants.LET); }
+(?i)loop(?-i)(?=\s)             { return new Symbol(TokenConstants.LOOP); }
+(?i)new(?-i)(?=\s)              { return new Symbol(TokenConstants.NEW); }
+(?i)not(?-i)(?=\s)              { return new Symbol(TokenConstants.NOT); }
+(?i)of(?-i)(?=\s)               { return new Symbol(TokenConstants.OF); }
+(?i)pool(?-i)(?=[\s|\n])        { return new Symbol(TokenConstants.POOL); }
+(?i)then(?-i)(?=[\s|\(])        { return new Symbol(TokenConstants.THEN); }
+t(?i)rue(?-i)(?=[\s|;|\)])      { return new Symbol(TokenConstants.BOOL_CONST); }
+(?i)while(?-i)(?=[\s|\(])       { return new Symbol(TokenConstants.WHILE); }
 
 /* Operators */
 \+                              { return new Symbol(TokenConstants.PLUS); }
